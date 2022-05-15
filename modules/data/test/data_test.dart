@@ -1,12 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
+//* Saturday, 14th May 2022 08:57 PM
+//* quanghuuxx (quanghuuxx@gmail.com)
+//* -----
+//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
-import 'package:data/data.dart';
-
-void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
-  });
-}
+void main() {}

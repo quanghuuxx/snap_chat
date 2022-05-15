@@ -1,3 +1,8 @@
+# Saturday, 14th May 2022 07:10 PM
+# quanghuuxx (quanghuuxx@gmail.com)
+# -----
+# Copyright 2022 Your Company, Ltd. All rights reserved.
+
 name: snap_chat
 description: A new Flutter project.
 
@@ -30,6 +35,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  core:
+    path: './modules/core'
+  data:
+    path: './modules/data'
+  
+  flutter_bloc: ^8.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

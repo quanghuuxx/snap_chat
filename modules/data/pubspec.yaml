@@ -1,3 +1,8 @@
+# Saturday, 14th May 2022 07:11 PM
+# quanghuuxx (quanghuuxx@gmail.com)
+# -----
+# Copyright 2022 Your Company, Ltd. All rights reserved.
+
 name: data
 description: A new Flutter package project.
 version: 0.0.1
@@ -15,6 +20,8 @@ dependencies:
   # flutter packages pub run build_runner build --delete-conflicting-outputs
   retrofit: 3.0.1+1
   logger: ^1.1.0
+  firebase_core: ^1.17.0
+  cloud_firestore: ^3.1.15
   
 
 dev_dependencies:
