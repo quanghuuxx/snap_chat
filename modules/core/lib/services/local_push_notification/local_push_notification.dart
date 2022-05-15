@@ -1,8 +1,14 @@
+//* Sunday, 15th May 2022 10:32 AM
+//* quanghuuxx (quanghuuxx@gmail.com)
+//* -----
+//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/timezone.dart' as timezone;
 
 class LocalPushNotificatonService {
   final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
@@ -31,24 +37,25 @@ class LocalPushNotificatonService {
     /// Note: permissions aren't requested here just to demonstrate that can be
     /// done later
     final initializationSettingsIOS = IOSInitializationSettings(
-        requestAlertPermission: false,
-        requestBadgePermission: false,
-        requestSoundPermission: false,
-        onDidReceiveLocalNotification: (
-          int id,
-          String? title,
-          String? body,
-          String? payload,
-        ) async {
-          didReceiveLocalNotificationIOS.add(
-            ReceivedNotification(
-              id: id,
-              title: title,
-              body: body,
-              payload: payload,
-            ),
-          );
-        });
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+      onDidReceiveLocalNotification: (
+        int id,
+        String? title,
+        String? body,
+        String? payload,
+      ) async {
+        didReceiveLocalNotificationIOS.add(
+          ReceivedNotification(
+            id: id,
+            title: title,
+            body: body,
+            payload: payload,
+          ),
+        );
+      },
+    );
     final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
@@ -82,14 +89,13 @@ class LocalPushNotificatonService {
     int id,
     String title,
     String body, {
-    required tz.TZDateTime dateTime,
+    required timezone.TZDateTime dateTime,
     String? payload,
     DateTimeComponents dateTimeComponents = DateTimeComponents.time,
   }) async {
     if (await _init() == false) return;
 
-    _localNotificationsPlugin
-    .zonedSchedule(
+    _localNotificationsPlugin.zonedSchedule(
       id,
       title,
       body,
@@ -111,19 +117,19 @@ class LocalPushNotificatonService {
   }
 
   Future<void> configureLocalTimeZone() async {
-    tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('Vietnam/Hanoi'));
+    timezone.setLocalLocation(timezone.getLocation('Vietnam/Hanoi'));
   }
 
   NotificationDetails _getNotificationDetails() {
     return const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'chanel_id',
-          'chanel_name',
-          channelDescription: 'channel_description',
-          importance: Importance.max,
-        ),
-        iOS: IOSNotificationDetails());
+      android: AndroidNotificationDetails(
+        'chanel_id',
+        'chanel_name',
+        channelDescription: 'channel_description',
+        importance: Importance.max,
+      ),
+      iOS: IOSNotificationDetails(),
+    );
   }
 }
 
