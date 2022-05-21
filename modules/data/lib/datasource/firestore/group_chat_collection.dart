@@ -13,6 +13,7 @@ class GroupChatCollection extends CollectionBase<GroupChatInfo> {
   static const String createAtClm = 'create_at';
   static const String updateAtClm = 'update_at';
   static const String lastMessageIdClm = 'last_message_id';
+  static const String membersId = 'members_id';
 
   @override
   CollectionReference<DocumentModel<GroupChatInfo>> connect(firestore) {

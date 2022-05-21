@@ -14,16 +14,17 @@ class UserGroupModel {
   final int? deletedAt;
   final int? seenAt;
   final String groupChatId;
+  final bool isNotification;
 
   UserGroupModel({
     required this.userId,
     required this.joinedAt,
-     this.deletedAt,
-     this.seenAt,
+    this.deletedAt,
+    this.seenAt,
     required this.groupChatId,
+    required this.isNotification,
   });
 
-  factory UserGroupModel.fromJson(Map<String, dynamic> json) =>
-      _$UserGroupModelFromJson(json);
+  factory UserGroupModel.fromJson(Map<String, dynamic> json) => _$UserGroupModelFromJson(json);
   Map<String, dynamic> toJson() => _$UserGroupModelToJson(this);
 }

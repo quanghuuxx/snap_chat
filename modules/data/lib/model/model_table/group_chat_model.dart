@@ -16,6 +16,7 @@ class GroupChatInfo {
   final int createdAt;
   final int updatedAt;
   final String lastMessageId;
+  final List<String> membersId;
 
   GroupChatInfo({
     required this.name,
@@ -24,9 +25,9 @@ class GroupChatInfo {
     required this.createdAt,
     required this.updatedAt,
     required this.lastMessageId,
+    required this.membersId,
   });
 
-  factory GroupChatInfo.fromJson(Map<String, dynamic> json) =>
-      _$GroupChatInfoFromJson(json);
+  factory GroupChatInfo.fromJson(Map<String, dynamic> json) => _$GroupChatInfoFromJson(json);
   Map<String, dynamic> toJson() => _$GroupChatInfoToJson(this);
 }

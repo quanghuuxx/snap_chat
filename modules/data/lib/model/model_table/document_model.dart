@@ -7,10 +7,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DocumentModel<T> {
   final String id;
+  final DocumentReference<Map<String, dynamic>> reference;
   final T data;
 
   DocumentModel({
     required this.id,
+    required this.reference,
     required this.data,
   });
 
@@ -18,7 +20,7 @@ class DocumentModel<T> {
     DocumentSnapshot<Map<String, dynamic>> document,
     T Function(Map<String, dynamic> json) fromJsonT,
   ) {
-    return DocumentModel(id: document.id, data: fromJsonT(document.data()!));
+    return DocumentModel(id: document.id,reference: document.reference, data: fromJsonT(document.data()!));
   }
 
   Map<String, dynamic> toFirestore(
