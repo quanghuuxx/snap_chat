@@ -10,3 +10,4 @@ export './extentions/extention_list.dart';
 export './services/local_push_notification/local_push_notification.dart';
 export './services/shared_preferences/shared_preferences_service.dart';
 export './widget/base/state_base.dart';
+export './widget/loading_widget.dart';

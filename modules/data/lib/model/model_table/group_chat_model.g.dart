@@ -14,6 +14,9 @@ GroupChatInfo _$GroupChatInfoFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] as int,
       updatedAt: json['updated_at'] as int,
       lastMessageId: json['last_message_id'] as String,
+      membersId: (json['members_id'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$GroupChatInfoToJson(GroupChatInfo instance) =>
@@ -24,4 +27,5 @@ Map<String, dynamic> _$GroupChatInfoToJson(GroupChatInfo instance) =>
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'last_message_id': instance.lastMessageId,
+      'members_id': instance.membersId,
     };

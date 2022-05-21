@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_group_model.dart';
+part of 'member_group_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserGroupModel _$UserGroupModelFromJson(Map<String, dynamic> json) =>
-    UserGroupModel(
-      userId: json['user_id'] as String,
+MemberGroupInfo _$MemberGroupInfoFromJson(Map<String, dynamic> json) =>
+    MemberGroupInfo(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      photoUrl: json['photo_url'] as String?,
       joinedAt: json['joined_at'] as int,
       deletedAt: json['deleted_at'] as int?,
       seenAt: json['seen_at'] as int?,
-      groupChatId: json['group_chat_id'] as String,
     );
 
-Map<String, dynamic> _$UserGroupModelToJson(UserGroupModel instance) {
+Map<String, dynamic> _$MemberGroupInfoToJson(MemberGroupInfo instance) {
   final val = <String, dynamic>{
-    'user_id': instance.userId,
-    'joined_at': instance.joinedAt,
+    'id': instance.id,
+    'name': instance.name,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -27,8 +28,9 @@ Map<String, dynamic> _$UserGroupModelToJson(UserGroupModel instance) {
     }
   }
 
+  writeNotNull('photo_url', instance.photoUrl);
+  val['joined_at'] = instance.joinedAt;
   writeNotNull('deleted_at', instance.deletedAt);
   writeNotNull('seen_at', instance.seenAt);
-  val['group_chat_id'] = instance.groupChatId;
   return val;
 }

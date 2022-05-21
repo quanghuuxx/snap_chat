@@ -10,7 +10,7 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
-    - lib/model/*.g.dart
+    - lib/**/*.g.dart
 
 linter:
   rules:
@@ -22,6 +22,7 @@ linter:
     no_leading_underscores_for_local_identifiers: false
     always_use_package_imports: false
     avoid_relative_lib_imports: false
+    require_trailing_commas: false
 
     # enable
     prefer_single_quotes: true
@@ -38,7 +39,6 @@ linter:
     library_prefixes: true
     prefer_null_aware_method_calls: true
     recursive_getters: true
-    require_trailing_commas: true
     unnecessary_late: true
     use_string_buffers: true
     use_super_parameters: true
