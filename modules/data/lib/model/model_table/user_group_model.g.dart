@@ -1,8 +1,3 @@
-//* Saturday, 21st May 2022 10:30 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'user_group_model.dart';

@@ -1,7 +1,7 @@
-//* Saturday, 14th May 2022 07:58 PM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Saturday, 14th May 2022 07:58 PM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:json_annotation/json_annotation.dart';
 

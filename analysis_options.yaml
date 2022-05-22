@@ -19,6 +19,7 @@ linter:
     no_leading_underscores_for_local_identifiers: false
     always_use_package_imports: false
     avoid_relative_lib_imports: false
+    flutter_style_todos: false
 
     # enable
     prefer_single_quotes: true
@@ -31,7 +32,6 @@ linter:
     avoid_annotating_with_dynamic: true
     avoid_function_literals_in_foreach_calls: true
     file_names: true
-    flutter_style_todos: true
     library_prefixes: true
     prefer_null_aware_method_calls: true
     recursive_getters: true

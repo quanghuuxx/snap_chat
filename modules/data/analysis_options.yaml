@@ -23,6 +23,7 @@ linter:
     always_use_package_imports: false
     avoid_relative_lib_imports: false
     require_trailing_commas: false
+    constant_identifier_names: false
 
     # enable
     prefer_single_quotes: true
@@ -47,3 +48,4 @@ linter:
     cast_nullable_to_non_nullable: true
     prefer_relative_imports: true
     directives_ordering: true
+    

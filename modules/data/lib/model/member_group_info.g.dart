@@ -12,8 +12,10 @@ MemberGroupInfo _$MemberGroupInfoFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       photoUrl: json['photo_url'] as String?,
       joinedAt: json['joined_at'] as int,
+      groupChatId: json['group_chat_id'] as String,
       deletedAt: json['deleted_at'] as int?,
       seenAt: json['seen_at'] as int?,
+      isNotification: json['is_notification'] as bool,
     );
 
 Map<String, dynamic> _$MemberGroupInfoToJson(MemberGroupInfo instance) {
@@ -32,5 +34,7 @@ Map<String, dynamic> _$MemberGroupInfoToJson(MemberGroupInfo instance) {
   val['joined_at'] = instance.joinedAt;
   writeNotNull('deleted_at', instance.deletedAt);
   writeNotNull('seen_at', instance.seenAt);
+  val['is_notification'] = instance.isNotification;
+  val['group_chat_id'] = instance.groupChatId;
   return val;
 }

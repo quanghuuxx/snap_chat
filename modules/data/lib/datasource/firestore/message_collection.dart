@@ -1,12 +1,12 @@
-//* Saturday, 14th May 2022 09:01 PM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Saturday, 14th May 2022 09:01 PM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data.dart';
 
-class MessageCollection extends CollectionBase<MessageInfo> {
+class MessageCollection {
   final String groupChatId;
 
   MessageCollection({
@@ -22,6 +22,16 @@ class MessageCollection extends CollectionBase<MessageInfo> {
   static const String parentIdClm = 'parent_id';
   static const String typeClm = 'type';
 
+  static final _MessageConllection _conllection = _MessageConllection();
+
+  static _MessageConllection of(String groupChatId) {
+    return _conllection..groupChatId = groupChatId;
+  }
+}
+
+class _MessageConllection extends CollectionBase<MessageInfo> {
+  late String groupChatId;
+
   @override
   CollectionReference<DocumentModel<MessageInfo>> connect(
     FirebaseFirestore firestore,
@@ -32,8 +42,7 @@ class MessageCollection extends CollectionBase<MessageInfo> {
         .doc(groupChatId)
         .collection(CollectionName.message.name)
         .withConverter(
-          fromFirestore: (doc, _) =>
-              DocumentModel.fromFirestore(doc, MessageInfo.fromJson),
+          fromFirestore: (doc, _) => DocumentModel.fromFirestore(doc, MessageInfo.fromJson),
           toFirestore: (doc, _) => doc.data.toJson(),
         );
   }

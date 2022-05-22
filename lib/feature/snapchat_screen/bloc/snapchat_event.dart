@@ -1,7 +1,7 @@
-//* Sunday, 15th May 2022 10:55 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Sunday, 15th May 2022 10:55 AM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 part of 'snapchat_bloc.dart';
 
@@ -9,8 +9,17 @@ part of 'snapchat_bloc.dart';
 abstract class SnapchatEvent {}
 
 class SnapchatCheckConversation extends SnapchatEvent {
-  final String? groupChatId;
+  final SnapchatArgument argument;
   SnapchatCheckConversation({
-    this.groupChatId,
+    required this.argument,
+  });
+}
+
+class SnapchatChatingEvent extends SnapchatEvent {
+  final List<DocumentModel<MessageInfo>> messages;
+  final List<MemberGroupInfo> members;
+  SnapchatChatingEvent({
+    required this.messages,
+    required this.members,
   });
 }

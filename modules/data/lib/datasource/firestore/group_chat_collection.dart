@@ -1,7 +1,7 @@
-//* Saturday, 14th May 2022 07:12 PM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Saturday, 14th May 2022 07:12 PM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data.dart';
@@ -21,8 +21,7 @@ class GroupChatCollection extends CollectionBase<GroupChatInfo> {
         //
         .collection(CollectionName.group_chat.name)
         .withConverter(
-          fromFirestore: (doc, _) =>
-              DocumentModel.fromFirestore(doc, GroupChatInfo.fromJson),
+          fromFirestore: (doc, _) => DocumentModel.fromFirestore(doc, GroupChatInfo.fromJson),
           toFirestore: (doc, _) => doc.data.toJson(),
         );
   }

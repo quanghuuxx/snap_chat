@@ -1,9 +1,7 @@
-//* Saturday, 14th May 2022 07:13 PM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
-
-// ignore_for_file: constant_identifier_names
+// Saturday, 21st May 2022 11:14 AM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data.dart';
@@ -16,7 +14,6 @@ enum CollectionName {
   group_chat,
   message,
   user_group,
-  user_info,
 }
 
 abstract class CollectionBase<T> {

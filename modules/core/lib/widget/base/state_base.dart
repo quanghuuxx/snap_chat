@@ -1,12 +1,11 @@
-//* Sunday, 15th May 2022 12:47 PM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Sunday, 15th May 2022 12:47 PM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:flutter/material.dart';
 
-abstract class StateBase<T extends StatefulWidget> extends State<T>
-    with WidgetsBindingObserver {
+abstract class StateBase<T extends StatefulWidget> extends State<T> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
