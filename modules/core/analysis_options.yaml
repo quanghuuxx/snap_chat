@@ -1,4 +1,45 @@
+# Sunday, 15th May 2022 10:32 AM
+# quanghuuxx (quanghuuxx@gmail.com)
+# -----
+# Copyright 2022 Your Company, Ltd. All rights reserved.
+
 include: package:flutter_lints/flutter.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+linter:
+  rules:
+    # disable
+    avoid_void_async: false
+    avoid_print: false
+    unawaited_futures: false
+    depend_on_referenced_packages: false
+    no_leading_underscores_for_local_identifiers: false
+    always_use_package_imports: false
+    avoid_relative_lib_imports: false
+
+    # enable
+    prefer_single_quotes: true
+    cancel_subscriptions: true
+    close_sinks: true
+    cascade_invocations: true
+    unnecessary_overrides: true
+    unnecessary_await_in_return: true
+    always_declare_return_types: true
+    avoid_annotating_with_dynamic: true
+    avoid_function_literals_in_foreach_calls: true
+    file_names: true
+    flutter_style_todos: true
+    library_prefixes: true
+    prefer_null_aware_method_calls: true
+    recursive_getters: true
+    require_trailing_commas: true
+    unnecessary_late: true
+    use_string_buffers: true
+    use_super_parameters: true
+    sized_box_for_whitespace: true
+    sized_box_shrink_expand: true
+    cast_nullable_to_non_nullable: true
+    prefer_relative_imports: true
+    directives_ordering: true

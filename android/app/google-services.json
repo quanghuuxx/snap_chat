@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "209860458216",
+    "firebase_url": "https://snap-chat-9430a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "snap-chat-9430a",
+    "storage_bucket": "snap-chat-9430a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209860458216:android:648f011d56c530dad93b5d",
+        "android_client_info": {
+          "package_name": "com.example.snap_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209860458216-27c0t170m24nqd2j22b8e3ch9ov2i3nf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBicX53II2sb9_bk4OH1UrfxDWNp8kVNq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209860458216-27c0t170m24nqd2j22b8e3ch9ov2i3nf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
