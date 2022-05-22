@@ -1,7 +1,7 @@
-//* Sunday, 15th May 2022 11:17 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Sunday, 15th May 2022 11:17 AM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +35,7 @@ class MessageCard extends StatelessWidget {
   Widget _peerMessage() {
     return Row(
       children: [
-        if (hasMess)
-          const CircleAvatar(maxRadius: 30)
-        else
-          const SizedBox(width: 30),
+        if (hasMess) const CircleAvatar(maxRadius: 30) else const SizedBox(width: 30),
         Flexible(
           child: Container(
             padding: const EdgeInsets.all(10),

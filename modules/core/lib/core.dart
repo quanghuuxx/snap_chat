@@ -1,7 +1,7 @@
-//* Sunday, 15th May 2022 10:32 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Sunday, 15th May 2022 10:32 AM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 library core;
 

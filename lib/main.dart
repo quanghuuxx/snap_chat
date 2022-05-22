@@ -1,14 +1,25 @@
-//* Saturday, 14th May 2022 04:48 PM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Saturday, 21st May 2022 03:18 PM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:core/core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'component/dependency_injections/di.dart';
 import 'routers.dart';
 
-void main() {
+void main()  async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  SharedPreferencesService().init();
+  DependencyInjections.setup();
+
+  LocalPushNotificatonService()
+    ..didTapNotification.stream.listen((event) {})
+    ..didNotificationLaunchApp();
+
   runApp(const MyApp());
 }
 

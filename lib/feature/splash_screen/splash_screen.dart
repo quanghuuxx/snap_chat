@@ -1,10 +1,9 @@
-//* Sunday, 15th May 2022 10:24 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Saturday, 21st May 2022 03:50 PM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:core/core.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../routers.dart';
@@ -29,20 +28,10 @@ class _SplashScreenState extends StateBase<SplashScreen> {
 
   @override
   void onViewCreated() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    LocalPushNotificatonService()
-      ..didTapNotification.stream.listen((event) {})
-      ..didNotificationLaunchApp()
-      ..configureLocalTimeZone();
-    SharedPreferencesService().init();
-    await Firebase.initializeApp();
-    
+
     Future.delayed(
       const Duration(seconds: 2),
-      () => context.pushReplacementNamed(
-        Routers.home,
-        arguments: 'Router init',
-      ),
+      () => context.pushReplacementNamed(Routers.login),
     );
   }
 }

@@ -1,7 +1,7 @@
-//* Sunday, 15th May 2022 08:40 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Sunday, 15th May 2022 08:40 AM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -29,7 +29,6 @@ class MessageInfo {
     required this.type,
   });
 
-  factory MessageInfo.fromJson(Map<String, dynamic> json) =>
-      _$MessageInfoFromJson(json);
+  factory MessageInfo.fromJson(Map<String, dynamic> json) => _$MessageInfoFromJson(json);
   Map<String, dynamic> toJson() => _$MessageInfoToJson(this);
 }

@@ -1,7 +1,7 @@
-//* Sunday, 15th May 2022 10:32 AM
-//* quanghuuxx (quanghuuxx@gmail.com)
-//* -----
-//* Copyright 2022 quanghuuxx, Ltd. All rights reserved.
+// Sunday, 15th May 2022 10:32 AM
+// quanghuuxx (quanghuuxx@gmail.com)
+// -----
+// Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
 // ignore_for_file: depend_on_referenced_packages
 
@@ -11,28 +11,23 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as timezone;
 
 class LocalPushNotificatonService {
-  final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
   bool? _didInit;
 
   LocalPushNotificatonService._internal();
 
-  static final LocalPushNotificatonService _instance =
-      LocalPushNotificatonService._internal();
+  static final LocalPushNotificatonService _instance = LocalPushNotificatonService._internal();
 
   factory LocalPushNotificatonService() {
     return _instance;
   }
 
-  final StreamController<ReceivedNotification> didReceiveLocalNotificationIOS =
-      StreamController.broadcast();
-  final StreamController<String?> didTapNotification =
-      StreamController.broadcast();
+  final StreamController<ReceivedNotification> didReceiveLocalNotificationIOS = StreamController.broadcast();
+  final StreamController<String?> didTapNotification = StreamController.broadcast();
 
   FutureOr<bool?> _init() async {
     if (_didInit == true) return true;
-    const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
 
     /// Note: permissions aren't requested here just to demonstrate that can be
     /// done later
@@ -101,16 +96,14 @@ class LocalPushNotificatonService {
       body,
       dateTime,
       _getNotificationDetails(),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: false,
       matchDateTimeComponents: dateTimeComponents,
     );
   }
 
   Future<void> didNotificationLaunchApp() async {
-    final notificationAppLaunchDetails =
-        await _localNotificationsPlugin.getNotificationAppLaunchDetails();
+    final notificationAppLaunchDetails = await _localNotificationsPlugin.getNotificationAppLaunchDetails();
     if (notificationAppLaunchDetails?.didNotificationLaunchApp == true) {
       didTapNotification.add(notificationAppLaunchDetails?.payload);
     }
