@@ -6,61 +6,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data.dart';
 
-typedef QueryCollection<T> = Query<DocumentModel<T>> Function(
-  Query<DocumentModel<T>> query,
-);
-
 enum CollectionName {
   group_chat,
   message,
   user_group,
 }
 
-abstract class CollectionBase<T> {
-  CollectionReference<DocumentModel<T>> get collection => connect(FirebaseFirestore.instance);
-  WriteBatch get batch => FirebaseFirestore.instance.batch();
+typedef ListenDocument<T> = void Function(List<T> list);
 
-  CollectionReference<DocumentModel<T>> connect(FirebaseFirestore firestore);
+abstract class CollectionBase<T extends DocumentModel> {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> add(DocumentModel<T> doc) {
-    return collection.add(doc);
+  CollectionReference<T> get collection => database(_db).withConverter<T>(
+        fromFirestore: (doc, _) =>
+            DocumentGenerate.fromFirestore(doc, fromJsonT),
+        toFirestore: (data, _) => DocumentGenerate.toFirestore(data, toJsonT),
+      );
+
+  WriteBatch batch() => _db.batch();
+
+  CollectionReference<Map<String, dynamic>> database(FirebaseFirestore db) {
+    return db.collection(collectionName);
   }
 
-  Future<void> set(DocumentModel<T> doc) {
-    return collection.doc(doc.id).set(doc);
-  }
+  String get collectionName;
 
-  Future<void> delete(DocumentModel<T> doc) {
-    return collection.doc(doc.id).delete();
-  }
+  T fromJsonT(Map<String, dynamic> json);
+  Map<String, dynamic> toJsonT(T data);
 
-  Future<void> update(DocumentReference reference, Map<String, dynamic> update) {
-    return FirebaseFirestore.instance.runTransaction((transaction) async {
-      transaction.update(reference, update);
-    });
-  }
-
-  void listen(
-    QueryCollection<T> query,
-    Function(List<DocumentModel<T>> snap) listener,
-  ) {
-    query(collection).snapshots().listen((snap) {
-      final list = snap.docs.map((e) => e.data()).toList();
-      listener.call(list);
-    });
-  }
-
-  Future<List<DocumentModel<T>>> query(QueryCollection<T> query) async {
-    final ref = await query(collection).get();
-    return ref.docs.map((e) => e.data()).toList();
-  }
-
-  Future<DocumentModel<T>?> findById(String id) async {
-    final ref = collection.doc(id);
-    return ref.get().then((value) => value.data());
-  }
+  Future<DocumentReference<T>> add(T add);
+  Future<void> set(T set);
+  Future<void> update(T update);
+  Future<void> delete(T delete);
 }
 
-abstract class CollectionListener<T> {
-  List<CollectionListener> listeners = [];
+extension CollectionReferenceExt<T extends DocumentModel>
+    on CollectionReference<T> {
+  Future<void> update(T data) async {
+    final map = data.toJson()
+      ..remove(DocumentGenerate.id)
+      ..remove(DocumentGenerate.reference);
+
+    doc(data.id).update(map);
+  }
 }

@@ -6,6 +6,7 @@
 library data;
 
 export './datasource/firestore/collection_base.dart';
+export './datasource/firestore/document_generate.dart';
 export './datasource/firestore/group_chat_collection.dart';
 export './datasource/firestore/message_collection.dart';
 export './datasource/firestore/user_group_collection.dart';

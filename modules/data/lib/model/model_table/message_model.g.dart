@@ -7,6 +7,8 @@ part of 'message_model.dart';
 // **************************************************************************
 
 MessageInfo _$MessageInfoFromJson(Map<String, dynamic> json) => MessageInfo(
+      id: json['id'] as String,
+      reference: json['reference'],
       senderId: json['sender_id'] as String,
       sentAt: json['sent_at'] as int,
       content: json['content'] as String,
@@ -21,10 +23,7 @@ MessageInfo _$MessageInfoFromJson(Map<String, dynamic> json) => MessageInfo(
 
 Map<String, dynamic> _$MessageInfoToJson(MessageInfo instance) {
   final val = <String, dynamic>{
-    'sender_id': instance.senderId,
-    'sent_at': instance.sentAt,
-    'content': instance.content,
-    'content_type': instance.contentType,
+    'id': instance.id,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -33,6 +32,11 @@ Map<String, dynamic> _$MessageInfoToJson(MessageInfo instance) {
     }
   }
 
+  writeNotNull('reference', instance.reference);
+  val['sender_id'] = instance.senderId;
+  val['sent_at'] = instance.sentAt;
+  val['content'] = instance.content;
+  val['content_type'] = instance.contentType;
   writeNotNull('recall_at', instance.recallAt);
   writeNotNull('hide_with', instance.hideWith);
   writeNotNull('parent_id', instance.parentId);

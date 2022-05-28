@@ -8,6 +8,8 @@ part of 'user_group_model.dart';
 
 UserGroupModel _$UserGroupModelFromJson(Map<String, dynamic> json) =>
     UserGroupModel(
+      id: json['id'] as String,
+      reference: json['reference'],
       userId: json['user_id'] as String,
       joinedAt: json['joined_at'] as int,
       deletedAt: json['deleted_at'] as int?,
@@ -18,8 +20,7 @@ UserGroupModel _$UserGroupModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$UserGroupModelToJson(UserGroupModel instance) {
   final val = <String, dynamic>{
-    'user_id': instance.userId,
-    'joined_at': instance.joinedAt,
+    'id': instance.id,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -28,6 +29,9 @@ Map<String, dynamic> _$UserGroupModelToJson(UserGroupModel instance) {
     }
   }
 
+  writeNotNull('reference', instance.reference);
+  val['user_id'] = instance.userId;
+  val['joined_at'] = instance.joinedAt;
   writeNotNull('deleted_at', instance.deletedAt);
   writeNotNull('seen_at', instance.seenAt);
   val['group_chat_id'] = instance.groupChatId;

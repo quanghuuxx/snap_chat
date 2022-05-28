@@ -7,7 +7,7 @@ import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 
 class MessageCard extends StatelessWidget {
-  final DocumentModel<MessageInfo> message;
+  final MessageInfo message;
   final bool hasMess;
   final bool isMyMess;
   const MessageCard({
@@ -17,7 +17,7 @@ class MessageCard extends StatelessWidget {
     required this.isMyMess,
   });
 
-  bool get hasParent => message.data.parentId != null;
+  bool get hasParent => message.parentId != null;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class MessageCard extends StatelessWidget {
               color: Colors.grey,
             ),
             child: Text(
-              message.data.content,
+             message.content,
               style: const TextStyle(color: Colors.white),
             ),
           ),
@@ -61,7 +61,7 @@ class MessageCard extends StatelessWidget {
         color: Colors.blue,
       ),
       child: Text(
-        message.data.content,
+       message.content,
         style: const TextStyle(color: Colors.white),
       ),
     );
@@ -75,7 +75,7 @@ class MessageCard extends StatelessWidget {
         color: Colors.blueAccent,
       ),
       child: Text(
-        message.data.content,
+       message.content,
         style: const TextStyle(color: Colors.white),
       ),
     );

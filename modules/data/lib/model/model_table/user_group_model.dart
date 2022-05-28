@@ -5,10 +5,12 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../data.dart';
+
 part 'user_group_model.g.dart';
 
 @JsonSerializable(includeIfNull: false, fieldRename: FieldRename.snake)
-class UserGroupModel {
+class UserGroupModel extends DocumentModel {
   final String userId;
   final int joinedAt;
   final int? deletedAt;
@@ -17,6 +19,8 @@ class UserGroupModel {
   final bool isNotification;
 
   UserGroupModel({
+    required super.id,
+    super.reference,
     required this.userId,
     required this.joinedAt,
     this.deletedAt,
@@ -26,5 +30,6 @@ class UserGroupModel {
   });
 
   factory UserGroupModel.fromJson(Map<String, dynamic> json) => _$UserGroupModelFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$UserGroupModelToJson(this);
 }

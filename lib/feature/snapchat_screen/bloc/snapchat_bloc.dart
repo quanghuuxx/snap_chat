@@ -59,17 +59,17 @@ class SnapchatBloc extends Bloc<SnapchatEvent, SnapchatState> {
   Future<void> _snapchatStarting(
     String groupChatId, {
     required SnapchatArgument argument,
-    DocumentModel<GroupChatInfo>? groupChat,
+    GroupChatInfo? groupChat,
   }) async {
     groupChat ??= await interactor.findGroupChatById(groupChatId);
 
     if (groupChat == null) throw Exception();
     var members = <MemberGroupInfo>[];
-    for (var memberId in groupChat.data.membersId) {
+    for (var memberId in groupChat.membersId) {
       final userInfo = await interactor.findUserInfoById(memberId);
       final userGroup = await interactor.findUserGroupById(memberId);
       if (userInfo == null || userGroup == null) continue;
-      members.add(MemberGroupInfo.fromModel(userGroup.data, userInfo));
+      members.add(MemberGroupInfo.fromModel(userGroup, userInfo));
     }
 
     final myGroup = members.firstWhere((e) => e.id == argument.myInfo.id);

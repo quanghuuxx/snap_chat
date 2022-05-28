@@ -16,7 +16,7 @@ class SnapchatCheckConversation extends SnapchatEvent {
 }
 
 class SnapchatChatingEvent extends SnapchatEvent {
-  final List<DocumentModel<MessageInfo>> messages;
+  final List<MessageInfo> messages;
   final List<MemberGroupInfo> members;
   SnapchatChatingEvent({
     required this.messages,

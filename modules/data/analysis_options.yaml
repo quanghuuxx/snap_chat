@@ -36,7 +36,6 @@ linter:
     avoid_annotating_with_dynamic: true
     avoid_function_literals_in_foreach_calls: true
     file_names: true
-    flutter_style_todos: true
     library_prefixes: true
     prefer_null_aware_method_calls: true
     recursive_getters: true

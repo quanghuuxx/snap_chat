@@ -20,6 +20,7 @@ linter:
     always_use_package_imports: false
     avoid_relative_lib_imports: false
     flutter_style_todos: false
+    constant_identifier_names: false
 
     # enable
     prefer_single_quotes: true
