@@ -53,8 +53,8 @@ class _SnapchatScreenState extends StateBase<SnapchatScreen> {
                       final lastMess = (index == 0) ? null : state.messages.elementAt(index--);
                       return MessageCard(
                         message: mess,
-                        hasMess: hasMess(mess.data, lastMess?.data),
-                        isMyMess: mess.data.senderId == myInfo.id,
+                        hasMess: hasMess(mess, lastMess),
+                        isMyMess: mess.senderId == myInfo.id,
                       );
                     },
                   );

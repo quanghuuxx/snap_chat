@@ -13,21 +13,55 @@ class GroupChatCollection extends CollectionBase<GroupChatInfo> {
   static const String createAtClm = 'create_at';
   static const String updateAtClm = 'update_at';
   static const String lastMessageIdClm = 'last_message_id';
-  static const String membersId = 'members_id';
+  static const String membersId = 'member_ids';
 
   @override
-  CollectionReference<DocumentModel<GroupChatInfo>> connect(firestore) {
-    return firestore
-        //
-        .collection(CollectionName.group_chat.name)
-        .withConverter(
-          fromFirestore: (doc, _) => DocumentModel.fromFirestore(doc, GroupChatInfo.fromJson),
-          toFirestore: (doc, _) => doc.data.toJson(),
-        );
+  Future<DocumentReference<GroupChatInfo>> add(GroupChatInfo add) {
+    return collection.add(add);
   }
 
-  Future<DocumentModel<GroupChatInfo>?> findGroupChatInfoById(String id) async {
-    final ref = collection.doc(id);
-    return ref.get().then((value) => value.data());
+  @override
+  String get collectionName => CollectionName.group_chat.name;
+
+  @override
+  Future<void> delete(GroupChatInfo delete) {
+    return collection.doc(delete.id).delete();
+  }
+
+  @override
+  GroupChatInfo fromJsonT(Map<String, dynamic> json) {
+    return GroupChatInfo.fromJson(json);
+  }
+
+  @override
+  Future<void> set(GroupChatInfo set) {
+    return collection.doc(set.id).set(set);
+  }
+
+  @override
+  Map<String, dynamic> toJsonT(GroupChatInfo data) {
+    return data.toJson();
+  }
+
+  @override
+  Future<void> update(GroupChatInfo update) {
+    return collection.update(update);
+  }
+
+  Future<GroupChatInfo?> findGroupChatById(String id) async {
+    final snap = await collection.doc(id).get();
+    return snap.data();
+  }
+
+  Future<GroupChatInfo?> findGroupChatByMembers(List<String> membersId) async {
+    final respone = await collection
+        .where(GroupChatCollection.membersId, isEqualTo: membersId)
+        .where(GroupChatCollection.typeClm, isEqualTo: 0)
+        .get();
+
+    if (respone.docs.isEmpty) {
+      return null;
+    }
+    return respone.docs.first.data();
   }
 }

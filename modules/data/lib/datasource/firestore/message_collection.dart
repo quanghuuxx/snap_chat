@@ -3,7 +3,10 @@
 // -----
 // Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../data.dart';
 
 class MessageCollection {
@@ -32,18 +35,83 @@ class MessageCollection {
 class _MessageConllection extends CollectionBase<MessageInfo> {
   late String groupChatId;
 
+  StreamSubscription<QuerySnapshot<MessageInfo>>? subscription;
+
   @override
-  CollectionReference<DocumentModel<MessageInfo>> connect(
-    FirebaseFirestore firestore,
-  ) {
-    return firestore
-        //
+  CollectionReference<Map<String, dynamic>> database(FirebaseFirestore db) {
+    return db
         .collection(CollectionName.group_chat.name)
         .doc(groupChatId)
-        .collection(CollectionName.message.name)
-        .withConverter(
-          fromFirestore: (doc, _) => DocumentModel.fromFirestore(doc, MessageInfo.fromJson),
-          toFirestore: (doc, _) => doc.data.toJson(),
-        );
+        .collection(CollectionName.message.name);
   }
+
+  @override
+  Future<DocumentReference<MessageInfo>> add(MessageInfo add) {
+    return collection.add(add);
+  }
+
+  @override
+  String get collectionName => CollectionName.message.name;
+
+  @override
+  Future<void> delete(MessageInfo delete) {
+    return collection.doc(delete.id).delete();
+  }
+
+  @override
+  MessageInfo fromJsonT(Map<String, dynamic> json) {
+    return MessageInfo.fromJson(json);
+  }
+
+  @override
+  Future<void> set(MessageInfo set) {
+    return collection.doc(set.id).set(set);
+  }
+
+  @override
+  Map<String, dynamic> toJsonT(MessageInfo data) {
+    return data.toJson();
+  }
+
+  @override
+  Future<void> update(MessageInfo update) {
+    return collection.update(update);
+  }
+
+  Future<MessageInfo?> findMessageById(String id) async {
+    final snap = await collection.doc(id).get();
+    return snap.data();
+  }
+
+  void listen(
+      {required UserGroupModel userGroup,
+      required ListenDocument<MessageInfo> listen}) {
+    assert(subscription == null, 'MessageColection avaliable listen');
+    subscription = collection
+        .where(MessageCollection.sentAtClm, isGreaterThan: userGroup.deletedAt ?? 0)
+        .snapshots()
+        .listen(null);
+
+    subscription!.onData((query) {
+      final messages = query.docs.map((e) => e.data()).toList()
+        ..removeWhere((e) => e.hideWith?.contains(userGroup.userId) == true);
+
+      listen(messages);
+    });
+  }
+
+  void removeListen() {
+    subscription?.cancel();
+    subscription = null;
+  }
+}
+
+enum MessageContentType {
+  text,
+  image_url,
+}
+
+enum MessageType {
+  user_sent,
+  system_sent,
 }

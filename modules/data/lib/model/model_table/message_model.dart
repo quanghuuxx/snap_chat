@@ -5,10 +5,12 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../data.dart';
+
 part 'message_model.g.dart';
 
 @JsonSerializable(includeIfNull: false, fieldRename: FieldRename.snake)
-class MessageInfo {
+class MessageInfo extends DocumentModel {
   final String senderId;
   final int sentAt;
   final String content;
@@ -19,6 +21,8 @@ class MessageInfo {
   final int type;
 
   MessageInfo({
+    required super.id,
+    super.reference,
     required this.senderId,
     required this.sentAt,
     required this.content,
@@ -30,5 +34,6 @@ class MessageInfo {
   });
 
   factory MessageInfo.fromJson(Map<String, dynamic> json) => _$MessageInfoFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$MessageInfoToJson(this);
 }

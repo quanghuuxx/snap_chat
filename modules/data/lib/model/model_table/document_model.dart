@@ -3,29 +3,20 @@
 // -----
 // Copyright 2022 quanghuuxx, Ltd. All rights reserved.
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class DocumentModel<T> {
+part 'document_model.g.dart';
+
+@JsonSerializable(includeIfNull: false, fieldRename: FieldRename.snake)
+class DocumentModel {
   final String id;
-  final DocumentReference<Map<String, dynamic>> reference;
-  final T data;
+  final Object? reference;
 
   DocumentModel({
     required this.id,
-    required this.reference,
-    required this.data,
+    this.reference,
   });
 
-  factory DocumentModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> document,
-    T Function(Map<String, dynamic> json) fromJsonT,
-  ) {
-    return DocumentModel(id: document.id, reference: document.reference, data: fromJsonT(document.data()!));
-  }
-
-  Map<String, dynamic> toFirestore(
-    Map<String, dynamic> Function(T data) toJsonT,
-  ) {
-    return toJsonT(data);
-  }
+  factory DocumentModel.fromJson(Map<String, dynamic> json) => _$DocumentModelFromJson(json);
+  Map<String, dynamic> toJson() => _$DocumentModelToJson(this);
 }

@@ -18,13 +18,13 @@ class SnapchatRepositoryImpl extends SnapchatRepository {
   });
 
   @override
-  Future<void> addMessage(DocumentModel<MessageInfo> message) {
+  Future<void> addMessage(MessageInfo message) {
     return MessageCollection.of('').add(message);
   }
 
   @override
-  Future<void> updateMessage(DocumentModel<MessageInfo> message) {
-    return MessageCollection.of('').update(message.reference, message.data.toJson());
+  Future<void> updateMessage(MessageInfo message) {
+    return MessageCollection.of('').update(message);
   }
 
   @override
@@ -33,30 +33,25 @@ class SnapchatRepositoryImpl extends SnapchatRepository {
   }
 
   @override
-  void listener(String groupChatId, UserGroupModel myGroup, Function(List<DocumentModel<MessageInfo>> snap) listener) {
+  void listener(
+    String groupChatId,
+    UserGroupModel myGroup,
+    Function(List<MessageInfo> snap) listener,
+  ) {
     MessageCollection.of(groupChatId).listen(
-      (query) => query.where(MessageCollection.sentAtClm, isGreaterThan: myGroup.deletedAt),
-      (snap) => listener,
+      listen: listener,
+      userGroup: myGroup,
     );
   }
 
   @override
-  Future<DocumentModel<GroupChatInfo>?> findGroupChatByMembers(List<String> membersId) async {
-    final respone = await groupChatCollection.query(
-      (query) => query
-          .where(GroupChatCollection.membersId, isEqualTo: membersId)
-          .where(GroupChatCollection.typeClm, isEqualTo: 0),
-    );
-
-    if (respone.isEmpty) {
-      return null;
-    }
-    return respone.first;
+  Future<GroupChatInfo?> findGroupChatByMembers(List<String> membersId) async {
+    return groupChatCollection.findGroupChatByMembers(membersId);
   }
 
   @override
-  Future<DocumentModel<UserGroupModel>?> findUserGroupById(String uid) {
-    return userGroupCollection.findById(uid);
+  Future<UserGroupModel?> findUserGroupById(String uid) {
+    return userGroupCollection.findUserGroupById(uid);
   }
 
   @override
@@ -65,7 +60,7 @@ class SnapchatRepositoryImpl extends SnapchatRepository {
   }
 
   @override
-  Future<DocumentModel<GroupChatInfo>?> findGroupChatById(String groupChatId) {
-    return groupChatCollection.findGroupChatInfoById(groupChatId);
+  Future<GroupChatInfo?> findGroupChatById(String groupChatId) {
+    return groupChatCollection.findGroupChatById(groupChatId);
   }
 }

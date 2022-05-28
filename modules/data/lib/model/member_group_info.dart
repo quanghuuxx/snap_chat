@@ -13,6 +13,7 @@ part 'member_group_info.g.dart';
 class MemberGroupInfo {
   final String id;
   final String name;
+  final String userGroupId;
   final String? photoUrl;
   final int joinedAt;
   final int? deletedAt;
@@ -23,6 +24,7 @@ class MemberGroupInfo {
   MemberGroupInfo({
     required this.id,
     required this.name,
+    required this.userGroupId,
     this.photoUrl,
     required this.joinedAt,
     required this.groupChatId,
@@ -35,6 +37,7 @@ class MemberGroupInfo {
     return MemberGroupInfo(
       id: info.id,
       name: info.name,
+      userGroupId: userGroup.id,
       photoUrl: info.photoUrl,
       joinedAt: userGroup.joinedAt,
       deletedAt: userGroup.deletedAt,
@@ -46,6 +49,7 @@ class MemberGroupInfo {
 
   UserGroupModel toUserGroupModel() {
     return UserGroupModel(
+      id: userGroupId,
       userId: id,
       joinedAt: joinedAt,
       groupChatId: groupChatId,

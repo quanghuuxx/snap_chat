@@ -5,10 +5,12 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../data.dart';
+
 part 'group_chat_model.g.dart';
 
 @JsonSerializable(includeIfNull: false, fieldRename: FieldRename.snake)
-class GroupChatInfo {
+class GroupChatInfo extends DocumentModel {
   @JsonKey(name: 'name_group')
   final String name;
   final String ownerId;
@@ -19,6 +21,8 @@ class GroupChatInfo {
   final List<String> membersId;
 
   GroupChatInfo({
+    required super.id,
+    super.reference,
     required this.name,
     required this.ownerId,
     required this.type,
@@ -29,5 +33,6 @@ class GroupChatInfo {
   });
 
   factory GroupChatInfo.fromJson(Map<String, dynamic> json) => _$GroupChatInfoFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$GroupChatInfoToJson(this);
 }

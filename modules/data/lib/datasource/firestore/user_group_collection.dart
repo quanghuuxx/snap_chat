@@ -14,15 +14,40 @@ class UserGroupCollection extends CollectionBase<UserGroupModel> {
   static const String groupChatIdClm = 'group_chat_id';
 
   @override
-  CollectionReference<DocumentModel<UserGroupModel>> connect(
-    FirebaseFirestore firestore,
-  ) {
-    return firestore
-        //
-        .collection(CollectionName.user_group.name)
-        .withConverter(
-          fromFirestore: (doc, _) => DocumentModel.fromFirestore(doc, UserGroupModel.fromJson),
-          toFirestore: (value, _) => value.data.toJson(),
-        );
+  Future<DocumentReference<UserGroupModel>> add(UserGroupModel add) {
+    return collection.add(add);
+  }
+
+  @override
+  String get collectionName => CollectionName.user_group.name;
+
+  @override
+  Future<void> delete(UserGroupModel delete) {
+    return collection.doc(delete.id).delete();
+  }
+
+  @override
+  UserGroupModel fromJsonT(Map<String, dynamic> json) {
+    return UserGroupModel.fromJson(json);
+  }
+
+  @override
+  Future<void> set(UserGroupModel set) {
+    return collection.doc(set.id).set(set);
+  }
+
+  @override
+  Map<String, dynamic> toJsonT(UserGroupModel data) {
+    return data.toJson();
+  }
+
+  @override
+  Future<void> update(UserGroupModel update) {
+    return collection.update(update);
+  }
+
+  Future<UserGroupModel?> findUserGroupById(String id) async {
+    final snap = await collection.doc(id).get();
+    return snap.data();
   }
 }

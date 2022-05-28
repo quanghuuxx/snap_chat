@@ -14,7 +14,7 @@ abstract class SnapchatState extends Equatable {
 class SnapchatInitial extends SnapchatState {}
 
 class SnapchatChatingState extends SnapchatState {
-  final List<DocumentModel<MessageInfo>> messages;
+  final List<MessageInfo> messages;
   final List<MemberGroupInfo> members;
   SnapchatChatingState({
     required this.messages,
