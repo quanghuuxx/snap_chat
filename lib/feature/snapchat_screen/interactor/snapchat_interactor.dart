@@ -5,6 +5,8 @@
 
 import 'package:data/data.dart';
 
+import '../model/sent_message.dart';
+
 abstract class SnapchatInteractor {
   void listener(
     String groupChatId,
@@ -12,11 +14,20 @@ abstract class SnapchatInteractor {
     Function(List<MessageInfo> snap) listener,
   );
 
-  Future<void> addMessage(MessageInfo message);
-  Future<void> updateMessage(MessageInfo message);
+  Future<void> addMessage(SentMessage message, GroupChatInfo groupChat);
+  Future<void> updateMessage(MessageInfo message, String groupChatId);
   Future<GroupChatInfo?> findGroupChatByMembers(List<String> membersId);
   Future<List<MemberGroupInfo>> getMembersGroupInfo(String groupChatId);
   Future<GroupChatInfo?> findGroupChatById(String groupChatId);
   Future<UserInfoModel?> findUserInfoById(String uid);
-  Future<UserGroupModel?> findUserGroupById(String uid);
+  Future<UserGroupModel?> findUserGroupByUserIdAndGroupChatId(
+    String userId,
+    String groupChatId,
+  );
+  Future<GroupChatInfo> initConversation(
+    SentMessage sentMessage,
+    List<String> membersId,
+  );
+
+  void removeListen();
 }

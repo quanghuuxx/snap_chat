@@ -12,6 +12,7 @@ import 'package:meta/meta.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../interactor/snapchat_interactor.dart';
+import '../model/sent_message.dart';
 import '../model/snapchat_argument.dart';
 
 part 'snapchat_event.dart';
@@ -23,6 +24,8 @@ class SnapchatBloc extends Bloc<SnapchatEvent, SnapchatState> {
   SnapchatBloc({required this.interactor}) : super(SnapchatInitial()) {
     on<SnapchatCheckConversation>(_onSnapchatCheckConversation);
     on<SnapchatChatingEvent>(_onSnapchatChatingEvent);
+    on<InitConversationEvent>(_onInitConversationEvent);
+    on<SendMessageEvent>(_onSendMessageEvent);
   }
 
   void _onSnapchatCheckConversation(
@@ -40,12 +43,17 @@ class SnapchatBloc extends Bloc<SnapchatEvent, SnapchatState> {
           emit(SnapchatEmptyState());
           return;
         }
-        _snapchatStarting(groupChat.id, argument: arg, groupChat: groupChat);
+        _snapchatStarting(
+          groupChatId: groupChat.id,
+          argument: arg,
+          groupChat: groupChat,
+        );
       } else if (arg is ArgumentByGroup) {
-        _snapchatStarting(arg.groupChatId, argument: arg);
+        _snapchatStarting(groupChatId: arg.groupChatId, argument: arg);
       }
-    } catch (e) {
+    } catch (e, trace) {
       log(e.toString(), name: 'SnapchatBloc Error');
+      log(trace.toString(), name: 'SnapchatBloc Error');
     }
   }
 
@@ -53,11 +61,49 @@ class SnapchatBloc extends Bloc<SnapchatEvent, SnapchatState> {
     SnapchatChatingEvent event,
     Emitter<SnapchatState> emit,
   ) {
-    emit(SnapchatChatingState(messages: event.messages, members: event.members));
+    emit(
+      SnapchatChatingState(
+        messages: event.messages,
+        members: event.members,
+        groupChatInfo: event.groupChatInfo,
+      ),
+    );
   }
 
-  Future<void> _snapchatStarting(
-    String groupChatId, {
+  void _onInitConversationEvent(
+    InitConversationEvent event,
+    Emitter<SnapchatState> emit,
+  ) async {
+    try {
+      final group = await interactor.initConversation(
+        event.sentMessage,
+        event.membersId,
+      );
+
+      _snapchatStarting(
+        groupChatId: group.id,
+        groupChat: group,
+        argument: event.argument,
+      );
+    } catch (e) {
+      log(e.toString(), name: 'SnapchatBloc Error');
+    }
+  }
+
+  void _onSendMessageEvent(
+    SendMessageEvent event,
+    Emitter<SnapchatState> emit,
+  ) {
+    if (state is! SnapchatChatingState) return;
+
+    interactor.addMessage(
+      event.sentMessage,
+      (state as SnapchatChatingState).groupChatInfo,
+    );
+  }
+
+  Future<void> _snapchatStarting({
+    required String groupChatId,
     required SnapchatArgument argument,
     GroupChatInfo? groupChat,
   }) async {
@@ -67,7 +113,10 @@ class SnapchatBloc extends Bloc<SnapchatEvent, SnapchatState> {
     var members = <MemberGroupInfo>[];
     for (var memberId in groupChat.membersId) {
       final userInfo = await interactor.findUserInfoById(memberId);
-      final userGroup = await interactor.findUserGroupById(memberId);
+      final userGroup = await interactor.findUserGroupByUserIdAndGroupChatId(
+        memberId,
+        groupChatId,
+      );
       if (userInfo == null || userGroup == null) continue;
       members.add(MemberGroupInfo.fromModel(userGroup, userInfo));
     }
@@ -75,7 +124,19 @@ class SnapchatBloc extends Bloc<SnapchatEvent, SnapchatState> {
     final myGroup = members.firstWhere((e) => e.id == argument.myInfo.id);
 
     interactor.listener(groupChatId, myGroup.toUserGroupModel(), (snap) {
-      add(SnapchatChatingEvent(messages: snap, members: members));
+      add(
+        SnapchatChatingEvent(
+          messages: snap,
+          members: members,
+          groupChatInfo: groupChat!,
+        ),
+      );
     });
+  }
+
+  @override
+  Future<void> close() {
+    interactor.removeListen();
+    return super.close();
   }
 }

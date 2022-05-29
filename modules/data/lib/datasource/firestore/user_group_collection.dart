@@ -50,4 +50,15 @@ class UserGroupCollection extends CollectionBase<UserGroupModel> {
     final snap = await collection.doc(id).get();
     return snap.data();
   }
+
+  Future<UserGroupModel?> findUserGroupByUserIdAndGroupChat(
+      String userId, String groupChatId) async {
+    final snap = await collection
+        .where(groupChatIdClm, isEqualTo: groupChatId)
+        .where(userIdClm, isEqualTo: userId)
+        .limit(1)
+        .get();
+
+    return snap.docs.isEmpty ? null : snap.docs.first.data();
+  }
 }

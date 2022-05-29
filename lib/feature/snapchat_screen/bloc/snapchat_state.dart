@@ -16,9 +16,12 @@ class SnapchatInitial extends SnapchatState {}
 class SnapchatChatingState extends SnapchatState {
   final List<MessageInfo> messages;
   final List<MemberGroupInfo> members;
+  final GroupChatInfo groupChatInfo;
+
   SnapchatChatingState({
     required this.messages,
     required this.members,
+    required this.groupChatInfo,
   });
 
   @override

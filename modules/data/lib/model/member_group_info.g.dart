@@ -10,6 +10,7 @@ MemberGroupInfo _$MemberGroupInfoFromJson(Map<String, dynamic> json) =>
     MemberGroupInfo(
       id: json['id'] as String,
       name: json['name'] as String,
+      userGroupId: json['user_group_id'] as String,
       photoUrl: json['photo_url'] as String?,
       joinedAt: json['joined_at'] as int,
       groupChatId: json['group_chat_id'] as String,
@@ -22,6 +23,7 @@ Map<String, dynamic> _$MemberGroupInfoToJson(MemberGroupInfo instance) {
   final val = <String, dynamic>{
     'id': instance.id,
     'name': instance.name,
+    'user_group_id': instance.userGroupId,
   };
 
   void writeNotNull(String key, dynamic value) {

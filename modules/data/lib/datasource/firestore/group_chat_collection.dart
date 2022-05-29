@@ -13,7 +13,7 @@ class GroupChatCollection extends CollectionBase<GroupChatInfo> {
   static const String createAtClm = 'create_at';
   static const String updateAtClm = 'update_at';
   static const String lastMessageIdClm = 'last_message_id';
-  static const String membersId = 'member_ids';
+  static const String membersId = 'members_id';
 
   @override
   Future<DocumentReference<GroupChatInfo>> add(GroupChatInfo add) {
@@ -54,14 +54,24 @@ class GroupChatCollection extends CollectionBase<GroupChatInfo> {
   }
 
   Future<GroupChatInfo?> findGroupChatByMembers(List<String> membersId) async {
-    final respone = await collection
+    var respone = await collection
         .where(GroupChatCollection.membersId, isEqualTo: membersId)
         .where(GroupChatCollection.typeClm, isEqualTo: 0)
         .get();
 
     if (respone.docs.isEmpty) {
-      return null;
+      membersId = membersId.reversed.toList();
+
+      respone = await collection
+          .where(GroupChatCollection.membersId, isEqualTo: membersId)
+          .where(GroupChatCollection.typeClm, isEqualTo: 0)
+          .get();
+
+      if (respone.docs.isEmpty) {
+        return null;
+      }
     }
+
     return respone.docs.first.data();
   }
 }

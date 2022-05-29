@@ -10,7 +10,7 @@ GroupChatInfo _$GroupChatInfoFromJson(Map<String, dynamic> json) =>
     GroupChatInfo(
       id: json['id'] as String,
       reference: json['reference'],
-      name: json['name_group'] as String,
+      name: json['name_group'] as String?,
       ownerId: json['owner_id'] as String,
       type: json['type'] as int,
       createdAt: json['created_at'] as int,

@@ -88,7 +88,9 @@ class _MessageConllection extends CollectionBase<MessageInfo> {
       required ListenDocument<MessageInfo> listen}) {
     assert(subscription == null, 'MessageColection avaliable listen');
     subscription = collection
-        .where(MessageCollection.sentAtClm, isGreaterThan: userGroup.deletedAt ?? 0)
+        .where(MessageCollection.sentAtClm,
+            isGreaterThan: userGroup.deletedAt ?? 0)
+        .orderBy(MessageCollection.sentAtClm, descending: true)
         .snapshots()
         .listen(null);
 

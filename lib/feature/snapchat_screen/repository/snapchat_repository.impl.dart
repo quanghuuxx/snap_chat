@@ -18,16 +18,6 @@ class SnapchatRepositoryImpl extends SnapchatRepository {
   });
 
   @override
-  Future<void> addMessage(MessageInfo message) {
-    return MessageCollection.of('').add(message);
-  }
-
-  @override
-  Future<void> updateMessage(MessageInfo message) {
-    return MessageCollection.of('').update(message);
-  }
-
-  @override
   Future<List<MemberGroupInfo>> getMembersGroupInfo(String groupChatId) async {
     return [];
   }
@@ -50,11 +40,6 @@ class SnapchatRepositoryImpl extends SnapchatRepository {
   }
 
   @override
-  Future<UserGroupModel?> findUserGroupById(String uid) {
-    return userGroupCollection.findUserGroupById(uid);
-  }
-
-  @override
   Future<UserInfoModel?> findUserInfoById(String uid) {
     return userInfoRDB.findByPath(uid);
   }
@@ -62,5 +47,49 @@ class SnapchatRepositoryImpl extends SnapchatRepository {
   @override
   Future<GroupChatInfo?> findGroupChatById(String groupChatId) {
     return groupChatCollection.findGroupChatById(groupChatId);
+  }
+
+  @override
+  Future<String> addMessage(MessageInfo message, String groupChatId) async {
+    final ref = await MessageCollection.of(groupChatId).add(message);
+    return ref.id;
+  }
+
+  @override
+  Future<String> createGroupChat(GroupChatInfo groupChatInfo) async {
+    final ref = await groupChatCollection.add(groupChatInfo);
+    return ref.id;
+  }
+
+  @override
+  Future<String> createUserGroup(UserGroupModel userGroupModel) async {
+    final ref = await userGroupCollection.add(userGroupModel);
+    return ref.id;
+  }
+
+  @override
+  Future<void> updateGroupChat(GroupChatInfo groupChat) {
+    return groupChatCollection.update(groupChat);
+  }
+
+  @override
+  Future<void> updateMessage(MessageInfo message, String groupChatId) {
+    return MessageCollection.of(groupChatId).update(message);
+  }
+
+  @override
+  Future<UserGroupModel?> findUserInfoByUserIdAndGroupChatId(
+    String userId,
+    String groupChatId,
+  ) {
+    return userGroupCollection.findUserGroupByUserIdAndGroupChat(
+      userId,
+      groupChatId,
+    );
+  }
+
+  @override
+  void removeListen() {
+    MessageCollection.of('').removeListen();
   }
 }

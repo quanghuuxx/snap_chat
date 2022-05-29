@@ -18,8 +18,29 @@ class SnapchatCheckConversation extends SnapchatEvent {
 class SnapchatChatingEvent extends SnapchatEvent {
   final List<MessageInfo> messages;
   final List<MemberGroupInfo> members;
+  final GroupChatInfo groupChatInfo;
   SnapchatChatingEvent({
     required this.messages,
     required this.members,
+    required this.groupChatInfo,
+  });
+}
+
+class InitConversationEvent extends SnapchatEvent {
+  final SentMessage sentMessage;
+  final List<String> membersId;
+  final SnapchatArgument argument;
+
+  InitConversationEvent({
+    required this.sentMessage,
+    required this.membersId,
+    required this.argument,
+  });
+}
+
+class SendMessageEvent extends SnapchatEvent {
+  final SentMessage sentMessage;
+  SendMessageEvent({
+    required this.sentMessage,
   });
 }

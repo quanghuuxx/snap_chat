@@ -15,12 +15,14 @@
       "name": "profile",
       "request": "launch",
       "type": "dart",
+      "program": "lib/main.dart",
       "flutterMode": "profile"
     },
     {
       "name": "release",
       "request": "launch",
       "type": "dart",
+      "program": "lib/main.dart",
       "flutterMode": "release"
     }
   ]

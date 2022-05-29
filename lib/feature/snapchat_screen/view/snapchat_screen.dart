@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../bloc/snapchat_bloc.dart';
+import '../model/sent_message.dart';
 import '../model/snapchat_argument.dart';
 import 'widget/message_card.dart';
+import 'widget/textfield_snapchat.dart';
 
 class SnapchatScreen extends StatefulWidget {
   final SnapchatArgument argument;
@@ -50,11 +52,14 @@ class _SnapchatScreenState extends StateBase<SnapchatScreen> {
                     itemCount: state.messages.length,
                     itemBuilder: (_, index) {
                       final mess = state.messages[index];
-                      final lastMess = (index == 0) ? null : state.messages.elementAt(index--);
                       return MessageCard(
                         message: mess,
-                        hasMess: hasMess(mess, lastMess),
-                        isMyMess: mess.senderId == myInfo.id,
+                        showReceiverAvatar: showReceiverAvatar(
+                          mess,
+                          index,
+                          state.messages,
+                        ),
+                        isMineSend: mess.senderId == myInfo.id,
                       );
                     },
                   );
@@ -68,14 +73,49 @@ class _SnapchatScreenState extends StateBase<SnapchatScreen> {
               },
             ),
           ),
-
+          TextFieldSnapchat(
+            onSend: (text) {
+              if (text.isEmpty) return;
+              if (snapchatBloc.state is SnapchatEmptyState) {
+                snapchatBloc.add(
+                  InitConversationEvent(
+                    sentMessage: SentMessage(senderId: myInfo.id, text: text),
+                    membersId: [
+                      myInfo.id,
+                      (widget.argument as ArgumentByMember).memberInfo.id,
+                    ],
+                    argument: widget.argument,
+                  ),
+                );
+              } else {
+                snapchatBloc.add(
+                  SendMessageEvent(
+                    sentMessage: SentMessage(
+                      senderId: myInfo.id,
+                      text: text,
+                    ),
+                  ),
+                );
+              }
+            },
+            onPickImage: () {},
+          ),
         ],
       ),
     );
   }
 
-  bool hasMess(MessageInfo cur, MessageInfo? other) {
-    if (other == null) return false;
-    return cur.senderId == other.senderId;
+  bool showReceiverAvatar(
+    MessageInfo cur,
+    int index,
+    List<MessageInfo> list,
+  ) {
+    if (index == 0) {
+      return true;
+    } else {
+      index--;
+    }
+
+    return cur.senderId != list[index].senderId;
   }
 }

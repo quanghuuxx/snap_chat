@@ -12,7 +12,7 @@ part 'group_chat_model.g.dart';
 @JsonSerializable(includeIfNull: false, fieldRename: FieldRename.snake)
 class GroupChatInfo extends DocumentModel {
   @JsonKey(name: 'name_group')
-  final String name;
+  final String? name;
   final String ownerId;
   final int type;
   final int createdAt;
@@ -23,7 +23,7 @@ class GroupChatInfo extends DocumentModel {
   GroupChatInfo({
     required super.id,
     super.reference,
-    required this.name,
+    this.name,
     required this.ownerId,
     required this.type,
     required this.createdAt,
@@ -35,4 +35,28 @@ class GroupChatInfo extends DocumentModel {
   factory GroupChatInfo.fromJson(Map<String, dynamic> json) => _$GroupChatInfoFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$GroupChatInfoToJson(this);
+
+  GroupChatInfo copyWith({
+    String? id,
+    Object? reference,
+    String? name,
+    String? ownerId,
+    int? type,
+    int? createdAt,
+    int? updatedAt,
+    String? lastMessageId,
+    List<String>? membersId,
+  }) {
+    return GroupChatInfo(
+      id: id ?? this.id,
+      reference: reference ?? this.reference,
+      name: name ?? this.name,
+      ownerId: ownerId ?? this.ownerId,
+      type: type ?? this.type,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      lastMessageId: lastMessageId ?? this.lastMessageId,
+      membersId: membersId ?? this.membersId,
+    );
+  }
 }
